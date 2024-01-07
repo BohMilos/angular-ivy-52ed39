@@ -1,0 +1,60 @@
+* {
+  margin: 0%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.loginForm {
+  position: absolute;
+  margin-left: 43%;
+  margin-top: 300px;
+}
+
+.submitForm {
+  position: absolute;
+  margin-left: 20%;
+}
+
+.editForm {
+  position: absolute;
+  margin-left: 40%;
+}
+
+.studentList {
+  position: absolute;
+  margin-left: 60%;
+  width: 400px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: gray;
+  color: black;
+}
+
+input {
+  border-radius: 5px;
+  border: black solid 2px;
+  height: 20px;
+  padding-left: 10px;
+  background-color: white;
+}
+
+input:hover {
+  border: lightskyblue solid;
+  transition: ease-in-out;
+  transition-delay: 0.1s;
+  transition-duration: 0.1s;
+}
+
+select {
+  background-color: white;
+}
+
+textarea {
+  background-color: white;
+}

@@ -1,0 +1,315 @@
+<body>
+  <div *ngIf="isHidden" class="loginForm">
+    <h2 class="centerLogin">Prihlasovanie</h2>
+    <br />
+    <form>
+      <label for="username"><h4>Prihlasovacie meno:</h4></label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="username"
+      /><br /><br />
+      <label for="password"><h4>Heslo:</h4></label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+      /><br /><br />
+
+      <button class="submitButton centerLogin" type="button" (click)="login()">
+        Prihlásiť
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="!isHidden">
+    <button (click)="logout()">Odhlásiť</button>
+
+    <div class="submitForm">
+      <h2>Pridať žiaka</h2>
+      <br />
+      <form (ngSubmit)="onSubmit()">
+        <label for="name">Meno*:</label><br />
+        <input [(ngModel)]="student.name" name="name" required />
+        <br />
+        <label for="surname">Priezvisko*:</label><br />
+        <input [(ngModel)]="student.surname" name="surname" required />
+        <br />
+        <label for="birth">Dátum narodenia:</label><br />
+        <input [(ngModel)]="student.birth" name="birth" type="date" />
+        <br />
+        <label for="avg">Priemer:</label><br />
+        <input
+          [(ngModel)]="student.avg"
+          name="avg"
+          type="number"
+          min="1"
+          max="5"
+          step="0.01"
+        />
+        <br />
+        <label for="class">Trieda:</label><br />
+        <select [(ngModel)]="student.class" name="class">
+          <option value="1.A">1.A</option>
+          <option value="1.B">1.B</option>
+          <option value="1.C">1.C</option>
+          <option value="1.D">1.D</option>
+          <option value="1.E">1.E</option>
+          <option value="2.A">2.A</option>
+          <option value="2.B">2.B</option>
+          <option value="2.C">2.C</option>
+          <option value="2.D">2.D</option>
+          <option value="2.E">2.E</option>
+          <option value="3.A">3.A</option>
+          <option value="3.B">3.B</option>
+          <option value="3.C">3.C</option>
+          <option value="3.D">3.D</option>
+          <option value="3.E">3.E</option>
+          <option value="4.A">4.A</option>
+          <option value="4.B">4.B</option>
+          <option value="4.C">4.C</option>
+          <option value="4.D">4.D</option>
+          <option value="4.E">4.E</option>
+        </select>
+        <br />
+        <label for="major">Odbor:</label><br />
+        <select [(ngModel)]="student.major" name="major">
+          <option value="Umelá inteligencia">Umelá inteligencia</option>
+          <option value="Inteligentné technológie">
+            Inteligentné technológie
+          </option>
+          <option value="Programovanie digitálnych technológií">
+            Programovanie digitálnych technológií
+          </option>
+          <option value="Sieťové a informačné technológie">
+            Sieťové a informačné technológie
+          </option>
+          <option value="Energetika a inteligentné aplikácie">
+            Energetika a inteligentné aplikácie
+          </option>
+          <option value="Elektronické komunikačné systémy">
+            Elektronické komunikačné systémy
+          </option>
+        </select>
+        <br />
+        <label for="gender">Pohlavie:</label><br />
+        <select [(ngModel)]="student.gender" name="gender">
+          <option value="Muž">Muž</option>
+          <option value="Žena">Žena</option>
+          <option value="Iné">Iné</option>
+        </select>
+        <br />
+        <label for="info">Info:</label><br />
+        <textarea [(ngModel)]="student.info" name="info"></textarea>
+        <br />
+        <label for="dis">Postihnutie:</label><br />
+        <label>
+          <input
+            name="dis"
+            id="disYes"
+            type="radio"
+            [(ngModel)]="student.disabled"
+            [value]="true"
+            #dddis="ngModel"
+          />
+          Áno
+        </label>
+        <label>
+          <input
+            name="dis"
+            id="disNo"
+            type="radio"
+            [(ngModel)]="student.disabled"
+            [value]="false"
+            #dddis="ngModel"
+          />
+          Nie
+        </label>
+        <br /><br />
+        <button
+          type="submit"
+          [disabled]="
+            !student.name ||
+            !student.surname ||
+            student.avg < 1 ||
+            student.avg > 5
+          "
+        >
+          Pridať
+        </button>
+      </form>
+    </div>
+
+    <div class="editForm">
+      <h2>
+        Nájsť,<br />
+        upraviť,<br />
+        vymazať žiaka
+      </h2>
+      <br />
+      <label for="searchName">Meno žiaka:</label><br />
+      <input
+        type="text"
+        id="searchName"
+        name="searchName"
+        [(ngModel)]="searchName"
+      /><br />
+
+      <label for="searchSurname">Priezvisko žiaka:</label><br />
+      <input
+        type="text"
+        id="searchSurname"
+        name="searchSurname"
+        [(ngModel)]="searchSurname"
+      /><br />
+      <br />
+      <button type="button" (click)="onSearch()">Nájsť žiaka</button><br />
+
+      <div *ngIf="selectedStudent">
+        <br />
+        <h3>Edit Student</h3>
+        <form>
+          <label for="name">Meno:</label><br />
+          <input [(ngModel)]="editStudentData.name" name="name" required />
+          <br />
+          <label for="surname">Priezvisko:</label><br />
+          <input
+            [(ngModel)]="editStudentData.surname"
+            name="surname"
+            required
+          />
+          <br />
+          <label for="birth">Dátum narodenia:</label><br />
+          <input [(ngModel)]="editStudentData.birth" name="birth" type="date" />
+          <br />
+          <label for="avg">Priemer:</label><br />
+          <input
+            [(ngModel)]="editStudentData.avg"
+            name="avg"
+            type="number"
+            min="1"
+            max="5"
+            step="0.01"
+          />
+          <br />
+          <label for="class">Trieda:</label><br />
+          <select [(ngModel)]="editStudentData.class" name="class">
+            <option value="1.A">1.A</option>
+            <option value="1.B">1.B</option>
+            <option value="1.C">1.C</option>
+            <option value="1.D">1.D</option>
+            <option value="1.E">1.E</option>
+            <option value="2.A">2.A</option>
+            <option value="2.B">2.B</option>
+            <option value="2.C">2.C</option>
+            <option value="2.D">2.D</option>
+            <option value="2.E">2.E</option>
+            <option value="3.A">3.A</option>
+            <option value="3.B">3.B</option>
+            <option value="3.C">3.C</option>
+            <option value="3.D">3.D</option>
+            <option value="3.E">3.E</option>
+            <option value="4.A">4.A</option>
+            <option value="4.B">4.B</option>
+            <option value="4.C">4.C</option>
+            <option value="4.D">4.D</option>
+            <option value="4.E">4.E</option>
+          </select>
+          <br />
+          <label for="major">Odbor:</label><br />
+          <select [(ngModel)]="editStudentData.major" name="major">
+            <option value="Umelá inteligencia">Umelá inteligencia</option>
+            <option value="Inteligentné technológie">
+              Inteligentné technológie
+            </option>
+            <option value="Programovanie digitálnych technológií">
+              Programovanie digitálnych technológií
+            </option>
+            <option value="Sieťové a informačné technológie">
+              Sieťové a informačné technológie
+            </option>
+            <option value="Energetika a inteligentné aplikácie">
+              Energetika a inteligentné aplikácie
+            </option>
+            <option value="Elektronické komunikačné systémy">
+              Elektronické komunikačné systémy
+            </option>
+          </select>
+          <br />
+          <label for="gender">Pohlavie:</label><br />
+          <select [(ngModel)]="editStudentData.gender" name="gender">
+            <option value="Muž">Muž</option>
+            <option value="Žena">Žena</option>
+            <option value="Iné">Iné</option>
+          </select>
+          <br />
+          <label for="info">Info:</label><br />
+          <textarea [(ngModel)]="editStudentData.info" name="info"></textarea>
+          <br />
+          <label for="dis">Postihnutie:</label><br />
+          <label>
+            <input
+              name="dis"
+              id="disYes"
+              type="radio"
+              [(ngModel)]="editStudentData.disabled"
+              [value]="true"
+              #dddis="ngModel"
+            />
+            Áno
+          </label>
+          <label>
+            <input
+              name="dis"
+              id="disNo"
+              type="radio"
+              [(ngModel)]="editStudentData.disabled"
+              [value]="false"
+              #dddis="ngModel"
+            />
+            Nie
+          </label>
+          <button
+            type="button"
+            (click)="saveChanges()"
+            [disabled]="editStudentData.avg < 1 || editStudentData.avg > 5"
+          >
+            Uložiť zmeny
+          </button>
+          <button type="button" (click)="cancelEdit()">Zrušiť</button>
+        </form>
+
+        <button type="button" (click)="deleteStudent()">Vymazať žiaka</button>
+      </div>
+    </div>
+
+    <div class="studentList">
+      <h2>Zoznam žiakov</h2>
+      <br />
+      <ul>
+        <li *ngFor="let student of studentList">
+          <h3>{{ student.name }} {{ student.surname }}</h3>
+          <p>
+            <strong>Dátum narodenia:</strong>
+            {{ student.birth | date: 'dd. MM. yyyy HH:mm' }}
+          </p>
+          <p><strong>Priemer:</strong> {{ student.avg }}</p>
+          <p><strong>Trieda:</strong> {{ student.class }}</p>
+          <p><strong>Odbor:</strong> {{ student.major }}</p>
+          <p><strong>Pohlavie:</strong> {{ student.gender }}</p>
+          <p><strong>Info:</strong> {{ student.info }}</p>
+          <p>
+            <strong>Disabled:</strong> {{ student.disabled ? 'Áno' : 'Nie' }}
+          </p>
+          <p>
+            <strong>Last Edit:</strong>
+            {{ student.lastEdit | date: 'dd. MM. yyyy HH:mm' }}
+          </p>
+          <br />
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
